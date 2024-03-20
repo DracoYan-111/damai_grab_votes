@@ -1,0 +1,12 @@
+{
+  "server_url": "http://127.0.0.1:4723",
+  "keyword": "凤凰传奇",
+  "users": [
+    "user1",
+    "user2"
+    ],
+  "city": "北京市",
+  "date": "2024-05-19 周日 19:30",
+  "price": "280",
+  "if_commit_order": false
+}
