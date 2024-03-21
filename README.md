@@ -143,7 +143,11 @@ python3 damai.py
 - 下载UiAutomator2驱动
 
   ```shell
-  npm install appium-uiautomator2-driver
+    appium driver install uiautomator2
+  ```
+- 检查是否成功安装
+  ```shell
+    appium driver list
   ```
 
 ​		可能会遇到如下错误：
@@ -179,7 +183,7 @@ export APPIUM_SKIP_CHROMEDRIVER_INSTALL=true
 启动appium server并使用uiautomator2驱动
 
 ```shell
-appium --use-plugins uiautomator2
+appium
 ```
 
 启动成功将出现如下信息：
