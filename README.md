@@ -189,22 +189,18 @@ appium
 启动成功将出现如下信息：
 
 ```
-[Appium] Welcome to Appium v2.2.1 (REV 2176894a5be5da17a362bf3f20678641a78f4b69)
-[Appium] Non-default server args:
-[Appium] {
-[Appium]   usePlugins: [
-[Appium]     'uiautomator2'
-[Appium]   ]
-[Appium] }
+[Appium] Welcome to Appium v2.5.1
+[Appium] The autodetected Appium home path: xxxxxx
 [Appium] Attempting to load driver uiautomator2...
-[Appium] Requiring driver at /Users/chenweicheng/Documents/xcode/node_modules/appium-uiautomator2-driver
+[Appium] Requiring driver at xxxxxx/index.js
+[Appium] AndroidUiautomator2Driver has been successfully loaded in 0.459s
 [Appium] Appium REST http interface listener started on http://0.0.0.0:4723
 [Appium] You can provide the following URLs in your client code to connect to this server:
-[Appium] 	http://127.0.0.1:4723/ (only accessible from the same host)
-[Appium] 	http://172.31.102.45:4723/
-[Appium] 	http://198.18.0.1:4723/
+[Appium]        http://127.0.0.1:4723/ (only accessible from the same host)
+[Appium]        http://172.24.31.70:4723/
+[Appium]        http://198.18.0.1:4723/
 [Appium] Available drivers:
-[Appium]   - uiautomator2@2.32.3 (automationName 'UiAutomator2')
+[Appium]   - uiautomator2@3.0.2 (automationName 'UiAutomator2')
 [Appium] No plugins have been installed. Use the "appium plugin" command to install the one(s) you want to use.
 ```
 
