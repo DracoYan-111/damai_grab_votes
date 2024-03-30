@@ -6,6 +6,7 @@ __Description__ = "大麦app抢票自动化"
 __Created__ = 2024/3/20 10:20
 """
 
+import subprocess
 from time import sleep
 
 from appium import webdriver
@@ -14,13 +15,23 @@ from config import Config
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
+
+def get_android_version():
+    result = subprocess.run(
+        ["adb", "shell", "getprop", "ro.build.version.release"],
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
 config = Config.load_config()
 
 device_app_info = AppiumOptions()
 # 操作系统
 device_app_info.set_capability("platformName", "Android")
 # 操作系统版本
-device_app_info.set_capability("platformVersion", "14")
+device_app_info.set_capability("platformVersion", get_android_version())
 # 设备名称
 device_app_info.set_capability("deviceName", "RF8M80RVNBJ")
 # app package
@@ -100,14 +111,19 @@ while True:
         # 选则座位 ，模拟短快坐标滑动 ?
         # driver.swipe(560, 900, 590, 900, 100)
         # 检查是否有票
-        no_ticket = driver.find_element(
-            by=By.XPATH,
-            value='//android.widget.TextView[@resource-id="cn.damai:id/tv_tag" and @text="无票"]',
-        )
+        try:
+            no_ticket = driver.find_element(
+                by=By.XPATH,
+                value='//android.widget.TextView[@resource-id="cn.damai:id/tv_tag" and @text="无票"]',
+            )
+        except NoSuchElementException:
+            no_ticket = None
         if no_ticket:
             print("无票, 返回上一页")
             driver.back()
             continue
+        # 播放音效
+
         # 如果配置中指定了price, 则选择对应价格的座位
         if config.price:
             driver.find_element(
@@ -116,7 +132,19 @@ while True:
             ).click()
         else:
             # 否则选择任意一个有票的座位
-            pass
+            print("选择任意一个有票的座位")
+            # //android.widget.LinearLayout[@resource-id="cn.damai:id/ll_perform_item"]
+            elements = driver.find_elements(
+                by=By.XPATH,
+                value='//android.widget.LinearLayout[@resource-id="cn.damai:id/ll_perform_item" and not(descendant::android.widget.TextView[@resource-id="cn.damai:id/tv_tag"])]',
+            )
+            # 点击第二个元素
+            if len(elements) >= 2:
+                elements[1].click()
+            else:
+                print("没有找到有票的座位")
+                driver.back()
+                continue
         # 检查观影人数并选择张数
         tv_num_element = driver.find_element(
             by=By.XPATH,
@@ -170,6 +198,4 @@ for user in config.users:
 driver.find_element(
     by=By.XPATH, value='//android.widget.TextView[@text="提交订单"]'
 ).click()
-
-
 driver.quit()
